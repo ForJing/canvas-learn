@@ -5,7 +5,7 @@ export function captureMouse(element: HTMLElement) {
     let x, y;
 
     x = e.pageX - element.offsetLeft;
-    y = e.pageY - element.offsetHeight;
+    y = e.pageY - element.offsetTop;
 
     mouse.x = x;
     mouse.y = y;
