@@ -9,6 +9,9 @@ window.onload = function() {
 
   const ball = new Ball();
   let angle = 0;
+  const centerScale = 1;
+  const range = 0.5;
+  const speed = 0.05;
 
   ball.x = canvas.width / 2;
   ball.y = canvas.height / 2;
@@ -17,8 +20,8 @@ window.onload = function() {
     requestAnimationFrame(drawFrame);
     context.clearRect(0, 0, canvas.width, canvas.height);
 
-    ball.y = canvas.height / 2 + Math.sin(angle) * 50;
-    angle += 0.1;
+    ball.scaleX = ball.scaleY = centerScale + Math.sin(angle) * range;
+    angle += speed;
     ball.draw(context);
   })();
 };
