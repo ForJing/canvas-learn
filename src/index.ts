@@ -1,6 +1,7 @@
 import "./style.scss";
 import { captureMouse } from "./utils";
 import Arrow from "./arrow";
+import Ball from "./ball";
 
 window.onload = function() {
   const canvas = document.getElementById("canvas") as HTMLCanvasElement;
