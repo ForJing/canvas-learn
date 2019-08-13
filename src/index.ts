@@ -7,17 +7,17 @@ window.onload = function() {
   const canvas = document.getElementById("canvas") as HTMLCanvasElement;
   const context = canvas.getContext("2d");
   let angle = 0;
-  const radius = 50;
+  // 椭圆 两个半径不同
+  const radiusX = 150;
+  const radiusY = 100;
   const centerX = canvas.width / 2;
   const centerY = canvas.height / 2;
-  const angleSpeed = 0.01;
+  const angleSpeed = 0.01
 
   function drawFrame() {
     requestAnimationFrame(drawFrame);
-    const x = radius * Math.cos(angle) + centerX;
-    const y = radius * Math.sin(angle) + centerY;
-
-    context.clearRect(0, 0, canvas.width, canvas.height);
+    const x = radiusX * Math.cos(angle) + centerX;
+    const y = radiusY * Math.sin(angle) + centerY;
 
     context.beginPath();
 
