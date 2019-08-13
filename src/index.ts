@@ -7,23 +7,27 @@ window.onload = function() {
   const canvas = document.getElementById("canvas") as HTMLCanvasElement;
   const context = canvas.getContext("2d");
   let angle = 0;
-  const range = 50;
+  const radius = 50;
+  const centerX = canvas.width / 2;
   const centerY = canvas.height / 2;
-  const xspeed = 1;
-  const yspeed = 0.05;
-  let xpos = 0;
-  let ypos = centerY;
+  const angleSpeed = 0.01;
 
-  (function drawFrame() {
+  function drawFrame() {
     requestAnimationFrame(drawFrame);
+    const x = radius * Math.cos(angle) + centerX;
+    const y = radius * Math.sin(angle) + centerY;
+
+    context.clearRect(0, 0, canvas.width, canvas.height);
 
     context.beginPath();
-    context.moveTo(xpos, ypos);
 
-    xpos += xspeed;
-    angle += yspeed;
-    ypos = centerY - Math.sin(angle) * range;
-    context.lineTo(xpos, ypos);
+    context.moveTo(centerX, centerY);
+    context.lineTo(x, y);
+
     context.stroke();
-  })();
+
+    angle += angleSpeed;
+  }
+
+  drawFrame();
 };
