@@ -10,6 +10,6 @@ window.onload = function() {
   const img = new Image();
   img.src = require("./1.jpg");
   img.onload = function() {
-    context.drawImage(img, 0, 0, 100, 100, 0, 0, 50, 100);
+    context.drawImage(img, 0, 0, img.width, img.height, 0, 0, 100, 100);
   };
 };
