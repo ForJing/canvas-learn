@@ -7,21 +7,34 @@ window.onload = function() {
   const canvas = document.getElementById("canvas") as HTMLCanvasElement;
   const context = canvas.getContext("2d");
 
-  const x0 = 100;
-  const y0 = 200;
-  const x2 = 300;
-  const y2 = 200;
+  // const gradient = context.createLinearGradient(
+  //   0,
+  //   0,
+  //   canvas.width,
+  //   canvas.height
+  // );
+  // gradient.addColorStop(0, "#f00");
+  // gradient.addColorStop(1, "rgba(255, 0, 0, 0.1)");
 
-  const mouse = captureMouse(canvas);
+  // context.fillStyle = gradient;
 
-  canvas.addEventListener("mousemove", function() {
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    const x1 = mouse.x * 2 - (x0 + x2) / 2;
-    const y1 = mouse.y * 2 - (y0 + y2) / 2;
-    context.beginPath();
-    context.moveTo(x0, y0);
-    context.fillRect(x1, y1, 10, 10);
-    context.quadraticCurveTo(x1, y1, x2, y2);
-    context.stroke();
-  });
+  // context.fillRect(0, 0, canvas.width, canvas.height);
+
+  const c1 = { x: 150, y: 150, radius: 30 };
+  const c2 = { x: 150, y: 150, radius: 60 };
+  const gradient = context.createRadialGradient(
+    c1.x,
+    c1.y,
+    c1.radius,
+    c2.x,
+    c2.y,
+    c2.radius
+  );
+  gradient.addColorStop(0.5, "blue");
+  gradient.addColorStop(1, "green");
+  context.fillStyle = gradient;
+  context.arc(150, 150, 60, 0, Math.PI * 2);
+  context.fill();
+  context.arc(150, 150, 30, 0, Math.PI * 2)
+  context.stroke()
 };
