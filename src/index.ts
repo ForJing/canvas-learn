@@ -6,28 +6,21 @@ import Ball from "./ball";
 window.onload = function() {
   const canvas = document.getElementById("canvas") as HTMLCanvasElement;
   const context = canvas.getContext("2d");
-  let angle = 0;
-  // 椭圆 两个半径不同
-  const radiusX = 150;
-  const radiusY = 100;
-  const centerX = canvas.width / 2;
-  const centerY = canvas.height / 2;
-  const angleSpeed = 0.01
 
-  function drawFrame() {
-    requestAnimationFrame(drawFrame);
-    const x = radiusX * Math.cos(angle) + centerX;
-    const y = radiusY * Math.sin(angle) + centerY;
+  const mouse = captureMouse(canvas);
 
-    context.beginPath();
-
-    context.moveTo(centerX, centerY);
-    context.lineTo(x, y);
-
+  function onMouseMove() {
+    context.lineTo(mouse.x, mouse.y);
     context.stroke();
-
-    angle += angleSpeed;
   }
 
-  drawFrame();
+  canvas.addEventListener("mousedown", function() {
+    context.beginPath();
+    context.moveTo(mouse.x, mouse.y);
+    canvas.addEventListener("mousemove", onMouseMove, false);
+  });
+
+  canvas.addEventListener("mouseup", function() {
+    canvas.removeEventListener("mousemove", onMouseMove);
+  });
 };
