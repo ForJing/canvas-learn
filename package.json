@@ -20,5 +20,8 @@
   "devDependencies": {
     "sass": "^1.22.9",
     "typescript": "^3.5.3"
+  },
+  "dependencies": {
+    "@types/node": "^12.7.2"
   }
 }
