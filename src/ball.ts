@@ -6,6 +6,8 @@ class Ball {
   scaleX: number;
   scaleY: number;
   color: string;
+  vx: number;
+  vy: number;
   lineWidth: number;
 
   constructor(radius: number = 40, color: string = "#f00") {
@@ -15,6 +17,8 @@ class Ball {
     this.rotation = 0;
     this.scaleX = 1;
     this.scaleY = 1;
+    this.vx = 0;
+    this.vy = 0;
     this.color = color;
     this.lineWidth = 1;
   }

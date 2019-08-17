@@ -6,30 +6,39 @@ import Ball from "./ball";
 window.onload = function() {
   const canvas = document.getElementById("canvas") as HTMLCanvasElement;
   const context = canvas.getContext("2d");
-  const mouse = captureMouse(canvas);
-  const arrow = new Arrow();
-  const speed = 3;
-  let lastTime = 0;
 
-  function drawFrame(time = 0) {
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    const now = +new Date();
-    const fps = 1000 / (now - lastTime);
-    console.log(fps);
-    lastTime = now;
+  let balls = Array(20)
+    .fill(0)
+    .map(() => {
+      const ball = new Ball(20);
 
+      ball.x = Math.random() * canvas.width;
+      ball.y = Math.random() * canvas.height;
+      ball.vx = Math.random() * 2 - 1;
+      ball.vy = Math.random() * 2 - 1;
+
+      return ball;
+    });
+
+  function drawFrame() {
     requestAnimationFrame(drawFrame);
-    const dx = mouse.x - arrow.x;
-    const dy = mouse.y - arrow.y;
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    balls.forEach(ball => {
+      ball.x += ball.vx;
+      ball.y += ball.vy;
 
-    const angle = Math.atan2(dy, dx);
-    const vx = Math.cos(angle) * speed;
-    const vy = Math.sin(angle) * speed;
+      if (
+        ball.x - ball.radius > canvas.width ||
+        ball.x + ball.radius < 0 ||
+        ball.y + ball.radius < 0 ||
+        ball.y - ball.radius > canvas.height
+      ) {
+        balls = balls.filter(i => i != ball);
+        console.log(balls);
+      }
 
-    arrow.rotation = angle;
-    arrow.x += vx;
-    arrow.y += vy;
-    arrow.draw(context);
+      ball.draw(context);
+    });
   }
 
   drawFrame();
