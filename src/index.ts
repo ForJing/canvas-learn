@@ -7,7 +7,7 @@ window.onload = function() {
   const canvas = document.getElementById("canvas") as HTMLCanvasElement;
   const context = canvas.getContext("2d");
 
-  let balls = Array(20)
+  let balls = Array(300)
     .fill(0)
     .map(() => {
       const ball = new Ball(20);
@@ -23,7 +23,26 @@ window.onload = function() {
   function drawFrame() {
     requestAnimationFrame(drawFrame);
     context.clearRect(0, 0, canvas.width, canvas.height);
-    balls.forEach(ball => {
+    // balls.forEach(ball => {
+    //   ball.x += ball.vx;
+    //   ball.y += ball.vy;
+
+    //   if (
+    //     ball.x - ball.radius > canvas.width ||
+    //     ball.x + ball.radius < 0 ||
+    //     ball.y + ball.radius < 0 ||
+    //     ball.y - ball.radius > canvas.height
+    //   ) {
+    //     console.time("xixi");
+    //     balls = balls.filter(i => i != ball);
+    //     console.timeEnd("xixi");
+    //   }
+
+    //   ball.draw(context);
+    // });
+
+    for (let i = balls.length - 1; i >= 0; i--) {
+      const ball = balls[i];
       ball.x += ball.vx;
       ball.y += ball.vy;
 
@@ -33,12 +52,13 @@ window.onload = function() {
         ball.y + ball.radius < 0 ||
         ball.y - ball.radius > canvas.height
       ) {
-        balls = balls.filter(i => i != ball);
-        console.log(balls);
+        console.time("xixi");
+        balls.splice(i, 1);
+        console.timeEnd("xixi");
       }
 
       ball.draw(context);
-    });
+    }
   }
 
   drawFrame();
