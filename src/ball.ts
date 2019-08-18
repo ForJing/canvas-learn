@@ -1,3 +1,5 @@
+import { parseColor } from "./utils";
+
 class Ball {
   x: number;
   y: number;
@@ -5,12 +7,12 @@ class Ball {
   rotation: number;
   scaleX: number;
   scaleY: number;
-  color: string;
+  color;
   vx: number;
   vy: number;
   lineWidth: number;
 
-  constructor(radius: number = 40, color: string = "#f00") {
+  constructor(radius: number = 40, color: any = "#f00") {
     this.x = 0;
     this.y = 0;
     this.radius = radius;
@@ -19,7 +21,7 @@ class Ball {
     this.scaleY = 1;
     this.vx = 0;
     this.vy = 0;
-    this.color = color;
+    this.color = parseColor(color);
     this.lineWidth = 1;
   }
 

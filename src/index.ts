@@ -7,58 +7,42 @@ window.onload = function() {
   const canvas = document.getElementById("canvas") as HTMLCanvasElement;
   const context = canvas.getContext("2d");
 
-  let balls = Array(300)
+  const gravity = 0.5;
+
+  let balls = Array(180)
     .fill(0)
     .map(() => {
-      const ball = new Ball(20);
+      const ball = new Ball(2, Math.random() * 0xffffff);
 
-      ball.x = Math.random() * canvas.width;
-      ball.y = Math.random() * canvas.height;
+      ball.x = canvas.width / 2;
+      ball.y = canvas.height;
       ball.vx = Math.random() * 2 - 1;
-      ball.vy = Math.random() * 2 - 1;
-
+      ball.vy = Math.random() * -10 - 10;
       return ball;
     });
 
   function drawFrame() {
     requestAnimationFrame(drawFrame);
     context.clearRect(0, 0, canvas.width, canvas.height);
-    // balls.forEach(ball => {
-    //   ball.x += ball.vx;
-    //   ball.y += ball.vy;
 
-    //   if (
-    //     ball.x - ball.radius > canvas.width ||
-    //     ball.x + ball.radius < 0 ||
-    //     ball.y + ball.radius < 0 ||
-    //     ball.y - ball.radius > canvas.height
-    //   ) {
-    //     console.time("xixi");
-    //     balls = balls.filter(i => i != ball);
-    //     console.timeEnd("xixi");
-    //   }
-
-    //   ball.draw(context);
-    // });
-
-    for (let i = balls.length - 1; i >= 0; i--) {
-      const ball = balls[i];
+    balls.forEach(ball => {
+      ball.vy += gravity;
       ball.x += ball.vx;
       ball.y += ball.vy;
+      ball.draw(context);
 
       if (
         ball.x - ball.radius > canvas.width ||
         ball.x + ball.radius < 0 ||
-        ball.y + ball.radius < 0 ||
-        ball.y - ball.radius > canvas.height
+        ball.y - ball.radius > canvas.height ||
+        ball.radius + ball.x < 0
       ) {
-        console.time("xixi");
-        balls.splice(i, 1);
-        console.timeEnd("xixi");
+        ball.x = canvas.width / 2;
+        ball.y = canvas.height;
+        ball.vx = Math.random() * 2 - 1;
+        ball.vy = Math.random() * -10 - 10;
       }
-
-      ball.draw(context);
-    }
+    });
   }
 
   drawFrame();

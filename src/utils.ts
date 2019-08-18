@@ -14,7 +14,7 @@ export function captureMouse(element: HTMLElement) {
   return mouse;
 }
 
-export function colorToRGB(color, alpha) {
+export function colorToRGB(color, alpha?: number) {
   if (typeof color === "string" && color[0] === "#") {
     color = parseInt(color.slice(1), 16);
   }
@@ -34,7 +34,7 @@ export function colorToRGB(color, alpha) {
   }
 }
 
-export function parseColor(color, toNumber) {
+export function parseColor(color, toNumber?: boolean) {
   if (toNumber) {
     if (typeof color === "number") {
       return color | 0;
