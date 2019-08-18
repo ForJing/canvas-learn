@@ -8,41 +8,42 @@ window.onload = function() {
   const context = canvas.getContext("2d");
 
   const gravity = 0.5;
+  const dedounce = -0.7;
 
-  let balls = Array(180)
-    .fill(0)
-    .map(() => {
-      const ball = new Ball(2, Math.random() * 0xffffff);
+  const ball = new Ball(20, Math.random() * 0xffffff);
 
-      ball.x = canvas.width / 2;
-      ball.y = canvas.height;
-      ball.vx = Math.random() * 2 - 1;
-      ball.vy = Math.random() * -10 - 10;
-      return ball;
-    });
+  ball.x = canvas.width / 2;
+  ball.y = canvas.height / 2;
+  ball.vx = 8;
+  ball.vy = 20;
 
   function drawFrame() {
-    requestAnimationFrame(drawFrame);
     context.clearRect(0, 0, canvas.width, canvas.height);
 
-    balls.forEach(ball => {
-      ball.vy += gravity;
-      ball.x += ball.vx;
-      ball.y += ball.vy;
-      ball.draw(context);
+    ball.vy += gravity;
 
-      if (
-        ball.x - ball.radius > canvas.width ||
-        ball.x + ball.radius < 0 ||
-        ball.y - ball.radius > canvas.height ||
-        ball.radius + ball.x < 0
-      ) {
-        ball.x = canvas.width / 2;
-        ball.y = canvas.height;
-        ball.vx = Math.random() * 2 - 1;
-        ball.vy = Math.random() * -10 - 10;
-      }
-    });
+    ball.x += ball.vx;
+    ball.y += ball.vy;
+
+    if (ball.x + ball.radius >= canvas.width) {
+      ball.x = canvas.width - ball.radius;
+      ball.vx *= dedounce;
+    } else if (ball.x - ball.radius <= 0) {
+      ball.x = ball.radius;
+      ball.vx *= dedounce;
+    }
+
+    if (ball.y + ball.radius >= canvas.height) {
+      ball.y = canvas.height - ball.radius;
+      ball.vy *= dedounce;
+    } else if (ball.y - ball.radius <= 0) {
+      ball.y = ball.radius;
+      ball.vy *= dedounce;
+    }
+
+    ball.draw(context);
+
+    requestAnimationFrame(drawFrame);
   }
 
   drawFrame();
