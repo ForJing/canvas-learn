@@ -1,3 +1,5 @@
+import { Rect } from "./ball";
+
 export function captureMouse(element: HTMLElement) {
   const mouse = { x: 0, y: 0 };
 
@@ -49,4 +51,13 @@ export function parseColor(color, toNumber?: boolean) {
     }
     return color;
   }
+}
+
+export function containsPoint(rect: Rect, x, y): boolean {
+  return !(
+    x < rect.x ||
+    x > rect.x + rect.w ||
+    y < rect.y ||
+    y > rect.y + rect.h
+  );
 }

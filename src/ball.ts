@@ -1,5 +1,12 @@
 import { parseColor } from "./utils";
 
+export interface Rect {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+}
+
 class Ball {
   x: number;
   y: number;
@@ -40,6 +47,15 @@ class Ball {
       context.stroke();
     }
     context.restore();
+  }
+
+  getBounds(): Rect {
+    return {
+      x: this.x - this.radius,
+      y: this.y - this.radius,
+      w: this.radius * 2,
+      h: this.radius * 2
+    };
   }
 }
 
