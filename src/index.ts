@@ -14,11 +14,37 @@ window.onload = function() {
 
   ball.draw(context);
 
-  const ballRect = ball.getBounds();
+  let offsetx = 0;
+  let offsety = 0;
 
-  canvas.addEventListener("mousemove", function() {
+  canvas.addEventListener("mousedown", function() {
+    const ballRect = ball.getBounds();
+
     if (containsPoint(ballRect, mouse.x, mouse.y)) {
-      console.log("xixi");
+      offsetx = mouse.x - ball.x;
+      offsety = mouse.y - ball.y;
+      canvas.addEventListener("mousemove", onMouseMove);
+      canvas.addEventListener("mouseup", onMouseUp);
     }
   });
+
+  function onMouseMove() {
+    ball.x = mouse.x - offsetx;
+    ball.y = mouse.y - offsety;
+  }
+
+  function onMouseUp() {
+    canvas.removeEventListener("mousemove", onMouseMove);
+    canvas.removeEventListener("mouseup", onMouseUp);
+  }
+
+  function drawFrame() {
+    requestAnimationFrame(drawFrame);
+
+    context.clearRect(0, 0, canvas.width, canvas.height);
+
+    ball.draw(context);
+  }
+
+  drawFrame();
 };
