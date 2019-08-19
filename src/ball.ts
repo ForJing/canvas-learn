@@ -38,7 +38,7 @@ class Ball {
     context.rotate(this.rotation);
     context.scale(this.scaleX, this.scaleY);
     context.lineWidth = this.lineWidth;
-    context.fillStyle = this.color;
+    context.fillStyle = parseColor(this.color);
     context.beginPath();
     context.arc(0, 0, this.radius, 0, Math.PI * 2, true);
     context.closePath();
